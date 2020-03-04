@@ -10,6 +10,8 @@ public class PercentageBar : MonoBehaviour
     public float Max = 100.0f;
 
     public Image BarImage;
+
+    public Pawn pawn;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class PercentageBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float percentFilled = Current / Max;
+        float percentFilled = pawn.health / pawn.max;
         BarImage.fillAmount = percentFilled;
         if (percentFilled > 0.25)
         {

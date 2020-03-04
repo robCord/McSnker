@@ -6,6 +6,7 @@ public abstract class Pawn : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
     public float health = 100f;
+    public float max = 100f;
     private Transform tf;
 
     void Start()
