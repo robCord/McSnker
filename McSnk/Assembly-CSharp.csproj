@@ -62,10 +62,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AIController.cs" />
+    <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\EnemyPawn.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\NoiseMaker.cs" />
+    <Compile Include="Assets\Scripts\Pawn.cs" />
     <Compile Include="Assets\Scripts\PercentageBar.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerPawn.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/ROBCORDO/Desktop/McSnker/McSnk/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
