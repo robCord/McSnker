@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\NoiseMaker.cs" />
+    <Compile Include="Assets\Scripts\PercentageBar.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/ROBCORDO/Desktop/McSnker/McSnk/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

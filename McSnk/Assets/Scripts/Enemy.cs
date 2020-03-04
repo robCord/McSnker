@@ -1,29 +1,37 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    public float fieldOfView = 45f;
+    // Keep track of our transform
     private Transform tf;
-    //default state
-    public string AIState = "Idle";
 
-    public float Hitpoints;
-
+    // Keep track of our target location
     public Transform target;
 
+    // Track what state the AI is in
+    public string AIState = "Idle";
+
+    // Track enemy health
+    public float HitPoints;
+
+    // Track attack range
     public float AttackRange;
 
-    public float HpCutOff;
+    // Track health cutoff
+    public float HPCutoff;
 
-    private float speed = 5.0f;
+    // Track enemy movement speed
+    public float speed = 5.0f;
 
-    //track healing rate per second 
+    // Track our healing rate per second
     public float restingHealRate = 1.0f;
-    //maximum hp 
-    public float maxHp = 100;
+
+    // Track max hitpoints
+    public float maxHP;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +42,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CanHear(GameManager.instance.player);
         if (AIState == "Idle")
         {
+            // Do the state behavior
             Idle();
+
+            // Check for transitions
             if (isInRange())
             {
                 ChangeState("Seek");
@@ -44,49 +56,53 @@ public class Enemy : MonoBehaviour
         }
         else if (AIState == "Rest")
         {
-            //state behavior
+            // Do the state behavior
             Rest();
-            //check for transitions
-            if (Hitpoints >= HpCutOff)
+
+            // Check for transitions
+            if (HitPoints >= HPCutoff)
             {
                 ChangeState("Idle");
             }
         }
-        else if (AIState == " Seek")
+        else if (AIState == "Seek")
         {
-            //do the state behavior
+            // Do the state behavior
             Seek();
-            //check for transitions
-            if (Hitpoints < HpCutOff)
+
+            // Check for transitions
+            if (HitPoints < HPCutoff)
             {
                 ChangeState("Rest");
             }
-
-            if (!isInRange())
+            else if (!isInRange())
             {
                 ChangeState("Idle");
             }
         }
         else
         {
-            Debug.LogError("State does not exist");
+            Debug.LogError("State does not exist: " + AIState);
         }
     }
 
     public void Idle()
     {
-        // do nothing
+        // Do nothing!
     }
 
     public void Rest()
     {
-        //stand still and heal
-        Hitpoints += restingHealRate * Time.deltaTime;
-        Hitpoints = Math.Min(Hitpoints, maxHp);
+        // Stand Still
+        // Heal
+        HitPoints += restingHealRate * Time.deltaTime;
+
+        HitPoints = Mathf.Min(HitPoints, maxHP);
     }
 
-    public  void Seek()
+    public void Seek()
     {
+        // Move toward player
         Vector3 vectorToTarget = target.position - tf.position;
         tf.position += vectorToTarget.normalized * speed * Time.deltaTime;
     }
@@ -94,12 +110,42 @@ public class Enemy : MonoBehaviour
     public void ChangeState(string newState)
     {
         AIState = newState;
-
-
     }
 
     public bool isInRange()
     {
         return (Vector3.Distance(tf.position, target.position) <= AttackRange);
+    }
+
+    public bool CanHear(GameObject target)
+    {
+        // Get the noisemaker from our target
+        NoiseMaker noise = target.GetComponent<NoiseMaker>();
+        // If there is a noisemaker, we can potentially hear the target
+        if (noise != null)
+        {
+            float adjustedVolumeDistance =
+                noise.volumeDistance - Vector3.Distance(tf.position, target.transform.position);
+            // if we're close enough, we heard the noise
+            if (adjustedVolumeDistance > 0)
+            {
+                Debug.Log("I heard the noise");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CanSee(GameObject target)
+    {
+        Vector3 vectorToTarget = target.transform.position - tf.position;
+        // Detect if target is inside FOV
+        float angleToTarget = Vector3.Angle(vectorToTarget, tf.up);
+        if (angleToTarget <= fieldOfView)
+        {
+            // Detect if target is in line of sight
+        }
+
+        return false;
     }
 }
