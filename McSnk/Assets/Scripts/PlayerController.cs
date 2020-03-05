@@ -13,11 +13,18 @@ public class PlayerController : Controller
     // Update is called once per frame
     void Update()
     {
+        float verticalInput = 0;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             pawn.Attack();
         }
 
-        pawn.Move();
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            verticalInput = 1;
+        }
+
+        pawn.Move(verticalInput);
     }
 }

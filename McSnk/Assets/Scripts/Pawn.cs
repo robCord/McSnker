@@ -7,7 +7,7 @@ public abstract class Pawn : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float health = 100f;
     public float max = 100f;
-    private Transform tf;
+    public Transform tf;
 
     
 
@@ -17,11 +17,12 @@ public abstract class Pawn : MonoBehaviour
     }
     public virtual void Attack()
     {
-        //Debug.Log(("Pawn Attack"));
+        Debug.Log(("Pawn Attack"));
     }
 
-    public virtual void Move()
+    public virtual void Move(float verticalInput)
     {
-       // Debug.Log("Moved with pawn");
+       tf.position += new Vector3(0, verticalInput, 0);
+        Debug.Log("Moved with pawn");
     }
 }

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameStartButton;
 
+    public GameObject TitleScreen;
+
     public GameObject player;
 
 
@@ -50,9 +52,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         
-        TitleBackgroundImage.SetActive(false);
-        TitleText.SetActive(false);
-        GameStartButton.SetActive(false);
+        TitleScreen.SetActive(false);
     }
 
 }

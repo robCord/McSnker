@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CanHear(GameManager.instance.player);
+        //CanHear(GameManager.instance.player);
         if (AIState == "Idle")
         {
             // Do the state behavior
@@ -117,24 +117,7 @@ public class Enemy : MonoBehaviour
         return (Vector3.Distance(tf.position, target.position) <= AttackRange);
     }
 
-    public bool CanHear(GameObject target)
-    {
-        // Get the noisemaker from our target
-        NoiseMaker noise = target.GetComponent<NoiseMaker>();
-        // If there is a noisemaker, we can potentially hear the target
-        if (noise != null)
-        {
-            float adjustedVolumeDistance =
-                noise.volumeDistance - Vector3.Distance(tf.position, target.transform.position);
-            // if we're close enough, we heard the noise
-            if (adjustedVolumeDistance > 0)
-            {
-                Debug.Log("I heard the noise");
-                return true;
-            }
-        }
-        return false;
-    }
+   
 
     public bool CanSee(GameObject target)
     {
