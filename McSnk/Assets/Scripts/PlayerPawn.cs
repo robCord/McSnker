@@ -21,4 +21,9 @@ public class PlayerPawn : Pawn
         Debug.Log("Player Attack");
         base.Attack();
     }
+
+    public override void Move()
+    {
+        
+    }
 }

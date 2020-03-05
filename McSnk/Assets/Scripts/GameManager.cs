@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameStartButton;
 
     public GameObject player;
+
 
     void Awake()
     {
@@ -41,13 +43,16 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
+        
         Application.Quit();
     }
 
     public void StartGame()
     {
+        
         TitleBackgroundImage.SetActive(false);
         TitleText.SetActive(false);
         GameStartButton.SetActive(false);
     }
+
 }

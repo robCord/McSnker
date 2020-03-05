@@ -138,12 +138,21 @@ public class Enemy : MonoBehaviour
 
     public bool CanSee(GameObject target)
     {
+        Debug.DrawRay(transform.position, Vector2.up, Color.red);
+        Transform targetTf = this.target.GetComponent<Transform>();
         Vector3 vectorToTarget = target.transform.position - tf.position;
+       
         // Detect if target is inside FOV
         float angleToTarget = Vector3.Angle(vectorToTarget, tf.up);
         if (angleToTarget <= fieldOfView)
         {
-            // Detect if target is in line of sight
+            //raycast
+            RaycastHit2D targetHit = Physics2D.Raycast(tf.position, vectorToTarget);
+            if (targetHit.collider.gameObject == target)
+            {
+                Debug.Log("target detected");
+                return true;
+            }
         }
 
         return false;

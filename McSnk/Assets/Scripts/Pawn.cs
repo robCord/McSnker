@@ -9,17 +9,19 @@ public abstract class Pawn : MonoBehaviour
     public float max = 100f;
     private Transform tf;
 
+    
+
     void Start()
     {
         tf = gameObject.GetComponent<Transform>();
     }
     public virtual void Attack()
     {
-        Debug.Log(("Pawn Attack"));
+        //Debug.Log(("Pawn Attack"));
     }
 
     public virtual void Move()
     {
-        Debug.Log("Moved with pawn");
+       // Debug.Log("Moved with pawn");
     }
 }
