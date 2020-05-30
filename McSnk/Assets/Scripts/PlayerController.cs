@@ -13,18 +13,26 @@ public class PlayerController : Controller
     // Update is called once per frame
     void Update()
     {
-        float verticalInput = 0;
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            pawn.Attack();
-        }
+        Vector3 movement = new Vector3(verticalInput, 0, 0) * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            verticalInput = 1;
-        }
+        Vector3 rotateMovement = new Vector3(0, 0, horizontalInput) * Time.deltaTime * 100;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    pawn.Attack();
+        //}
 
-        pawn.Move(verticalInput);
+        //if (Input.GetKey(KeyCode.UpArrow))
+        //{
+        //    verticalInput = 1;
+       // }
+
+        pawn.Move(movement);
+        pawn.Rotate(rotateMovement);
+    
+
     }
+
 }

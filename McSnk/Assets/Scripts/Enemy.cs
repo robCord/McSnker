@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public LayerMask hidden; 
+
+    public float viewRadius = 20f;
 
     public float fieldOfView = 45f;
     // Keep track of our transform
@@ -42,7 +45,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CanHear(GameManager.instance.player);
+        // CanHear(GameManager.instance.player);
+        if (CanSee(GameManager.instance.player))
+        {
+            Seek();
+
+        }
+
         if (AIState == "Idle")
         {
             // Do the state behavior
@@ -117,27 +126,42 @@ public class Enemy : MonoBehaviour
         return (Vector3.Distance(tf.position, target.position) <= AttackRange);
     }
 
-   
 
-    public bool CanSee(GameObject target)
+
+    public bool CanSee(GameObject playerFound)
     {
-        Debug.DrawRay(transform.position, Vector2.up, Color.red);
-        Transform targetTf = this.target.GetComponent<Transform>();
-        Vector3 vectorToTarget = target.transform.position - tf.position;
-       
+
+        Vector3 vectorToTarget = playerFound.transform.position - tf.position;
+        Debug.DrawRay(transform.position, vectorToTarget, Color.red);
         // Detect if target is inside FOV
-        float angleToTarget = Vector3.Angle(vectorToTarget, tf.up);
-        if (angleToTarget <= fieldOfView)
+        float angleToTarget = Vector3.Angle(vectorToTarget, tf.right);
+       
+        if (angleToTarget <= fieldOfView / 2)
         {
+            Debug.Log("another cansee");
             //raycast
-            RaycastHit2D targetHit = Physics2D.Raycast(tf.position, vectorToTarget);
-            if (targetHit.collider.gameObject == target)
+            RaycastHit2D targetHit = Physics2D.Raycast(tf.position, vectorToTarget, hidden);
+
+            Debug.Log(targetHit.collider.name);
+            if (targetHit.collider.gameObject.CompareTag("Player"))
             {
-                Debug.Log("target detected");
+                target = targetHit.collider.transform;
                 return true;
             }
+
+
+
         }
 
         return false;
+    }
+
+    public Vector3 AngleToTarget(float angleInDegrees, bool angleIsGlobal)
+    {
+        if (!angleIsGlobal)
+        {
+            angleInDegrees += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
     }
 }

@@ -50,6 +50,7 @@ public class AIController : Controller
         {
             
         }
+        
 
         if (AIState == "Idle")
         {

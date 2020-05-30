@@ -26,10 +26,10 @@ public class PlayerPawn : Pawn
         base.Attack();
     }
 
-    public override void Move(float verticalInput)
+    public override void Move(Vector3 playerMovement)
     {
         noiseMaker.volumeDistance += 5;
-        base.Move(verticalInput);
+        base.Move(playerMovement);
     }
 
 }

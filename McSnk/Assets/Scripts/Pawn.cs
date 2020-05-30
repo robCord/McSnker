@@ -20,9 +20,15 @@ public abstract class Pawn : MonoBehaviour
         Debug.Log(("Pawn Attack"));
     }
 
-    public virtual void Move(float verticalInput)
+    public virtual void Rotate(Vector3 direction)
     {
-       tf.position += new Vector3(0, verticalInput, 0);
+        transform.Rotate(direction);
+    }
+
+    public virtual void Move(Vector3 playerMovement)
+    {
+        //  tf.localPosition += playerMovement;
+        transform.Translate(playerMovement);
         Debug.Log("Moved with pawn");
     }
 }
